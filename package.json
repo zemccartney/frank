@@ -1,0 +1,17 @@
+{
+  "name": "frank",
+  "version": "0.0.0",
+  "engines": {
+    "node": "16.x.x",
+    "npm": "7.x.x || 8.x.x"
+  },
+  "description": "trrrrraaaaaasssshh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zemccartney/frank.git"
+  },
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/*"
+  ]
+}
