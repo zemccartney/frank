@@ -1,3 +1,4 @@
+'use strict';
 
 module.exports = {
     env: {
@@ -45,5 +46,39 @@ module.exports = {
         'react/no-unknown-property': 'error',
         'react/no-unused-prop-types': 'error',
         'react/prop-types': 'error'
-    }
+    },
+    overrides: [
+        // adapted from https://github.com/fabgrel10/vite-react-starter/blob/main/.eslintrc.json
+        {
+            files: ['src/**/*.{js,jsx}'],
+            rules: {
+                'import/order': [
+                    'error',
+                    {
+                        groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type'],
+                        pathGroups: [
+                            {
+                                pattern: './**/**\\.css',
+                                group: 'type',
+                                position: 'after'
+                            }
+                        ],
+                        pathGroupsExcludedImportTypes: ['builtin'],
+                        alphabetize: {
+                            order: 'asc',
+                            caseInsensitive: true
+                        },
+                        warnOnUnassignedImports: true
+                    }
+                ]
+            }
+        },
+        {
+            files: ['!src/**'],
+            excludedFiles: ['vite.config.js'],
+            parserOptions: {
+                sourceType: 'script'
+            }
+        }
+    ]
 };
