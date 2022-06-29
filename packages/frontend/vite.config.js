@@ -8,6 +8,6 @@ export default defineConfig({
         react(),
         // TODO Consider turning caching back on if slow; issue was cache would lead to outdated linting issues still showing in console
         // Could be an issue specific to file-renaming / relocating / deleting
-        eslintPlugin({ cache: false })
+        eslintPlugin({ eslintOptions: { cache: false } })
     ]
 });
