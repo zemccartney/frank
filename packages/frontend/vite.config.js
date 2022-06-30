@@ -9,5 +9,11 @@ export default defineConfig({
         // TODO Consider turning caching back on if slow; issue was cache would lead to outdated linting issues still showing in console
         // Could be an issue specific to file-renaming / relocating / deleting
         eslintPlugin({ eslintOptions: { cache: false } })
-    ]
+    ],
+    // https://mui.com/material-ui/guides/styled-engine/
+    resolve: {
+        alias: {
+            '@mui/styled-engine': '@mui/styled-engine-sc'
+        }
+    }
 });

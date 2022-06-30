@@ -2,12 +2,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+
+        // TODO Cleanup
+        // Bic'd from https://github.com/vitejs/vite/issues/2076#issuecomment-846558772
+        // https://github.com/vitejs/vite/issues/2076
+        // How do we want to surface errors nicely in dev?
+        //
+        // overlay comes from https://github.com/vitejs/vite/blob/main/packages/vite/src/client/overlay.ts
+
+        const showErrorOverlay = (ev) => {
+            // must be within function call because that's when the element is defined for sure.
+            const ErrorOverlay = customElements.get('vite-error-overlay')
+            // don't open outside vite environment
+            if (!ErrorOverlay) {return}
+
+            const overlay = new ErrorOverlay(ev.error)
+            document.body.appendChild(overlay)
+        }
+
+        window.addEventListener('error', showErrorOverlay)
+        window.addEventListener('unhandledrejection', ({reason}) => showErrorOverlay(reason))
+    </script>
   </body>
 </html>

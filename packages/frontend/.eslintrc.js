@@ -32,6 +32,7 @@ module.exports = {
         'react/jsx-uses-vars': 'warn',
         'react-hooks/exhaustive-deps': 'warn',
         'react-hooks/rules-of-hooks': 'error',
+        'react/jsx-no-undef': 'error',
         // compromise between usual ESM style of declaring functions for components as default exports
         // and still allowing function expressions for non-component work (though note that the linter
         // doesn't detect function style for assignment to object properties e.g. on internals.* )

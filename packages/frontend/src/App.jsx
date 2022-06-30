@@ -1,46 +1,43 @@
-import { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import CreateMuiTheme from '@mui/material/styles/createTheme';
+import MuiThemeProvider from '@mui/material/styles/ThemeProvider';
+import T from 'prop-types';
+import { ErrorBoundary } from 'react-error-boundary';
+import * as ReactRedux from 'react-redux';
+import { HistoryRouter } from 'redux-first-history/rr6';
+import * as MiddleEnd from 'strange-middle-end';
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
+import ErrorFallback from './components/ErrorFallback.jsx';
+import Routes from './routes/index.jsx';
 
-function App() {
+function App({ middleEnd, theme = CreateMuiTheme(), Router = HistoryRouter, ...routerProps }) {
 
-    const [count, setCount] = useState(0);
+    const { store } = middleEnd;
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>Hello Vite + React!</p>
-                <p>
-                    <button type="button" onClick={() => setCount((c) => c + 1)}>
-                        count is: {count}
-                    </button>
-                </p>
-                <p>
-                    Edit <code>App.jsx</code> and save to test HMR updates.
-                </p>
-                <p>
-                    <a
-                        className="App-link"
-                        href="https://reactjs.org"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Learn React
-                    </a>
-                    {' | '}
-                    <a
-                        className="App-link"
-                        href="https://vitejs.dev/guide/features.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Vite Docs
-                    </a>
-                </p>
-            </header>
-        </div>
+        <StyledThemeProvider theme={theme}>
+            <MuiThemeProvider theme={theme}>
+                <ErrorBoundary FallbackComponent={ErrorFallback}>
+                    <CssBaseline />
+                    <MiddleEnd.Provider middleEnd={middleEnd}>
+                        <ReactRedux.Provider store={store}>
+                            <Router {...routerProps}>
+                                <Routes />
+                            </Router>
+                        </ReactRedux.Provider>
+                    </MiddleEnd.Provider>
+                </ErrorBoundary>
+            </MuiThemeProvider>
+        </StyledThemeProvider>
     );
 }
+
+App.propTypes = {
+    middleEnd: T.shape({
+        store: T.object.isRequired
+    }).isRequired,
+    theme: T.object,
+    Router: T.elementType
+};
 
 export default App;
